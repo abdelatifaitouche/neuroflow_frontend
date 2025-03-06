@@ -15,7 +15,7 @@ function App() {
       {/* Ensures Layout Wraps All Pages */}
       <Route path="login" element={<LoginPage />} />
       <Route path="/" element={<Layout />}>
-        <Route index element={<PrivateRoute><Home /></PrivateRoute>} />
+        <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
         <Route path="settings" element={<Settings />} />
         
       </Route>

@@ -42,7 +42,7 @@ export  const AuthProvider = ({children}) =>{
               setAuthTokens(response.data)
               console.log(response.data)
               if(authTokens){
-                navigate('/home')
+                navigate('/')
                 setIsAuthenticated(true)
               }
             })
