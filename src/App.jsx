@@ -16,7 +16,6 @@ function App() {
       <Route path="login" element={<LoginPage />} />
       <Route path="/" element={<Layout />}>
         <Route index element={<PrivateRoute><Home /></PrivateRoute>} />
-        <Route path="home" element={<Home />} />
         <Route path="settings" element={<Settings />} />
         
       </Route>
