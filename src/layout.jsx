@@ -8,12 +8,12 @@ export default function Layout() {
     <SidebarProvider>
       <div className="flex h-screen">
         {/* Sidebar */}
-        <div className="w-64 bg-white border-r hidden md:block fixed h-full">
+        <div className="bg-green-50 border-r hidden md:block fixed h-full">
           <AppSidebar />
         </div>
 
         {/* Main Content (With Sidebar Space Adjusted) */}
-        <div className="flex-1 p-6 md:ml-64">
+        <div className="flex-2 w-[83vw] p-6 md:ml-64 ml-0 ">
           <SidebarTrigger />
           <Outlet />
         </div>
