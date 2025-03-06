@@ -3,46 +3,12 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState } from "react"
-
-import axios from "axios"
-import {useNavigate } from "react-router-dom"
-
+import AuthContext from "@/context/AuthContext"
+import { useContext } from "react"
 export function LoginForm(){
 
 
-  const [authTokens , setAuthTokens] = useState({})
-  
-  const navigate = useNavigate()
-
-
-
-  const aixosInstance = axios.create({
-    baseURL : 'http://127.0.0.1:8000' ,
-    withCredentials : true , 
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-
-  let login = async (e)=>{
-    e.preventDefault();
-    
-    await aixosInstance.post("/api/token/" , {
-      email : e.target.email.value , 
-      password : e.target.password.value
-    },
-    {withCredentials : true},
- ).then((response)=>{
-      setAuthTokens(response.data)
-      console.log(response.data)
-      if(authTokens){
-        navigate('/home')
-      }
-    })
-
-  }
-
+  let {login} = useContext(AuthContext)
 
   return (
     <div className={cn("flex flex-col gap-6")}>

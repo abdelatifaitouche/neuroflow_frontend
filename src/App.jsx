@@ -4,19 +4,25 @@ import Layout from './layout';
 import Home from './pages/HomePage/Home';
 import Settings from './pages/settings';
 import LoginPage from './pages/LoginPage';
+import PrivateRoute from "./pages/PrivateRoute";
+import { AuthProvider } from "./context/AuthContext";
+
 function App() {
   
   return (
-    <Routes>
+    <AuthProvider>
+      <Routes>
       {/* Ensures Layout Wraps All Pages */}
       <Route path="login" element={<LoginPage />} />
       <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
+        <Route index element={<PrivateRoute><Home /></PrivateRoute>} />
         <Route path="home" element={<Home />} />
         <Route path="settings" element={<Settings />} />
         
       </Route>
     </Routes>
+    </AuthProvider>
+    
     )
 }
 

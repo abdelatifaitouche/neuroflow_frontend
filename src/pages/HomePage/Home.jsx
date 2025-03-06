@@ -20,6 +20,13 @@ function Home() {
 
   // Fetching data from API
   useEffect(() => {
+
+    axios.post("http://127.0.0.1:8000/api/auth/verify/" , {
+      withCredentials : true
+    }).then((response)=>console.log(response)).catch(error => console.log(error.response))
+
+
+
     axios.get("http://127.0.0.1:8000/api/procedures/procedures_list/", {
       withCredentials: true,  // Ensures cookies are sent
     })

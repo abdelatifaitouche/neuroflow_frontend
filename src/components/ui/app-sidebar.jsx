@@ -1,9 +1,11 @@
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
 import { Link } from "react-router-dom";
-
+import AuthContext from "@/context/AuthContext";
+import { useContext } from "react";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -27,6 +29,10 @@ const items = [
 ]
 
 export function AppSidebar() {
+
+  let {logout} = useContext(AuthContext)
+
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -46,8 +52,16 @@ export function AppSidebar() {
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
-        </SidebarGroup>        
+        </SidebarGroup>   
+           
       </SidebarContent>
+      <SidebarFooter>
+      <SidebarMenuButton onClick={logout}>
+                      <Settings />
+                      <span>Logout</span>
+                    
+                  </SidebarMenuButton>
+        </SidebarFooter>  
     </Sidebar>
   )
 }
