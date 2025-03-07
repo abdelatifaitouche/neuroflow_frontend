@@ -47,31 +47,48 @@ export  const AuthProvider = ({children}) =>{
     }
 
 
-
+    
     let verifyToken = async () => {
-        await aixosInstance.post("api/auth/verify/").then((response)=>{
-            if(response.status === 200){
-                setIsAuthenticated(true)
-            }else{
-                setIsAuthenticated(false)
+        try {
+            const response = await aixosInstance.post("api/auth/verify/");
+            if (response.status === 200) {
+                setIsAuthenticated(true);
+            } else {
+                setIsAuthenticated(false);
             }
-        })
-       
-    }
+        } catch (error) {
+            setIsAuthenticated(false);
+            console.error("Token verification failed:", error);
+        }
+    };
+    
+    // Only verify if the user is not already logged out
+    useEffect(() => {
+        if (isAuthenticated !== false) {
+            verifyToken();
+        }
+    }, []);
+    
 
-    useEffect(()=>{
-        verifyToken();
-    } , [])
+    
 
     //and logout here
 
 
-    let logout = () => {
+    let logout = async () => {
         //send a request to api/auth/logout
 
-        aixosInstance.post("api/auth/logout/" , {withCredentials : true}).then((response)=>{
-            if (response.status == 200){
-                navigate('/login')
+        await aixosInstance.post("api/auth/logout/" , null).then((response)=>{
+            if (response.status === 200){
+                /*
+                document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                document.cookie = "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";*/
+
+                setIsAuthenticated(false)
+                setTimeout(() => {
+                    window.location.href = "/login"; // Hard refresh ensures cookies are cleared
+                }, 500);  // Wait 500ms before redirecting
+            
             }
         })
     }
