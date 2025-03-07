@@ -1,6 +1,4 @@
-import { createContext , useState } from "react";
-
-
+import { createContext , useEffect, useState } from "react";
 import axios from "axios"
 import {useNavigate } from "react-router-dom"
 
@@ -16,7 +14,7 @@ export default AuthContext;
 
 export  const AuthProvider = ({children}) =>{
 
-    const [isAuthenticated , setIsAuthenticated] = useState(false)
+    const [isAuthenticated , setIsAuthenticated] = useState(null)
     const navigate = useNavigate()
 
     const [authTokens , setAuthTokens] = useState({})
@@ -32,8 +30,7 @@ export  const AuthProvider = ({children}) =>{
 
     let login = async (e)=> {
             e.preventDefault();
-            
-            await aixosInstance.post("/api/token/" , {
+            await axios.post("http://127.0.0.1:8000/api/token/" , {
               email : e.target.email.value , 
               password : e.target.password.value
             },
@@ -48,7 +45,23 @@ export  const AuthProvider = ({children}) =>{
             })
         
     }
-    
+
+
+
+    let verifyToken = async () => {
+        await aixosInstance.post("api/auth/verify/").then((response)=>{
+            if(response.status === 200){
+                setIsAuthenticated(true)
+            }else{
+                setIsAuthenticated(false)
+            }
+        })
+       
+    }
+
+    useEffect(()=>{
+        verifyToken();
+    } , [])
 
     //and logout here
 
@@ -68,6 +81,7 @@ export  const AuthProvider = ({children}) =>{
     let contextData = {
         logout : logout,
         login : login , 
+        verifyToken : verifyToken,
         isAuthenticated : isAuthenticated
     }
 

@@ -23,7 +23,12 @@ const items = [
   },
   {
     title: "Settings",
-    url: "settings",
+    url: "/settings",
+    icon: Settings,
+  },
+  {
+    title: "Procedures",
+    url: "/procedures",
     icon: Settings,
   },
 ]
