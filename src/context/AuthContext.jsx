@@ -1,6 +1,7 @@
 import { createContext , useEffect, useState } from "react";
 import axios from "axios"
 import {useNavigate } from "react-router-dom"
+import { toast } from "sonner"
 
 //we have private routes that a non auth user cannot access
 
@@ -36,12 +37,15 @@ export  const AuthProvider = ({children}) =>{
             },
             {withCredentials : true},
          ).then((response)=>{
-              setAuthTokens(response.data)
-              console.log(response.data)
-              if(authTokens){
-                navigate('/')
-                setIsAuthenticated(true)
-              }
+            
+                if(response.status === 200){
+                    navigate('/')
+                    setIsAuthenticated(true)
+                }
+
+             
+            }).catch((error)=>{
+                toast("failed to login")
             })
         
     }

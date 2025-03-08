@@ -7,6 +7,7 @@ import PrivateRoute from "./pages/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
 import Procedures from "./pages/Procedures";
 
+import { Toaster } from "sonner";
 function App() {
     return (
         <AuthProvider>
@@ -18,6 +19,8 @@ function App() {
                     <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
                 </Route>
             </Routes>
+            <Toaster />
+
         </AuthProvider>
     );
 }
