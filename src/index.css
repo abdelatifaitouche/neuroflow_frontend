@@ -121,36 +121,23 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-
-.ProseMirror {
-  min-height: 200px; /* Ensures multiline */
-  max-height: 400px;
-  max-width: 50vw;
-  overflow-y: auto;
-  padding: 10px;
   
-  white-space: normal; /* Allows line breaks */
-  overflow-x: hidden; /* Hides horizontal scrollbar */
 }
 
-.ProseMirror h1,
-.ProseMirror h2,
-.ProseMirror h3,
-.ProseMirror h4,
-.ProseMirror h5,
-.ProseMirror h6 {
-  font-size: 2em;
-  margin-bottom: 1rem;
-}
-
-.ProseMirror ul,
-.ProseMirror ol {
-  padding-left: 20px;
-}
-
-.ProseMirror li {
-  margin-bottom: 0.5rem;
-  list-style-type: disc;
+@layer base {
+  :root {
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+ 
+  .dark {
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
 }

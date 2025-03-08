@@ -1,5 +1,4 @@
 import axios from "axios";
-import { navigate } from "react-router-dom";
 import { toast } from "sonner";
 
 
@@ -35,7 +34,6 @@ const axiosInstance = axios.create({
 
     axiosInstance.post("/procedures_list/" , data).then((response)=>{
         toast("created ")
-        navigate(-1)
     }).catch((error)=>{
         toast(error.message)
     })
