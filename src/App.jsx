@@ -8,6 +8,7 @@ import { AuthProvider } from "./context/AuthContext";
 import Procedures from "./pages/Procedures";
 
 import { Toaster } from "sonner";
+import CreateProcedurePage from "./pages/CreateProcedurePage";
 function App() {
     return (
         <AuthProvider>
@@ -16,6 +17,8 @@ function App() {
                 <Route element={<Layout />}>
                     <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
                     <Route path="/procedures" element={<PrivateRoute><Procedures /></PrivateRoute>} />
+                    <Route path="/procedures/new" element={<PrivateRoute><CreateProcedurePage /></PrivateRoute>} />
+
                     <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
                 </Route>
             </Routes>

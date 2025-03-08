@@ -2,6 +2,7 @@ import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
 import { Link } from "react-router-dom";
 import AuthContext from "@/context/AuthContext";
 import { useContext } from "react";
+import ProfileHeader from "../profileHeader";
 import {
   Sidebar,
   SidebarContent,
@@ -9,6 +10,7 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -41,6 +43,9 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarContent>
+        <SidebarHeader>
+          <ProfileHeader/>
+        </SidebarHeader>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
