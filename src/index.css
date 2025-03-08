@@ -122,3 +122,35 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+.ProseMirror {
+  min-height: 200px; /* Ensures multiline */
+  max-height: 400px;
+  max-width: 50vw;
+  overflow-y: auto;
+  padding: 10px;
+  
+  white-space: normal; /* Allows line breaks */
+  overflow-x: hidden; /* Hides horizontal scrollbar */
+}
+
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3,
+.ProseMirror h4,
+.ProseMirror h5,
+.ProseMirror h6 {
+  font-size: 2em;
+  margin-bottom: 1rem;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  padding-left: 20px;
+}
+
+.ProseMirror li {
+  margin-bottom: 0.5rem;
+  list-style-type: disc;
+}

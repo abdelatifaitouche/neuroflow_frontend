@@ -1,4 +1,5 @@
 import axios from "axios";
+import { navigate } from "react-router-dom";
 import { toast } from "sonner";
 
 
@@ -29,19 +30,18 @@ const axiosInstance = axios.create({
 
 
 
-  export const createProcedure = async (data) =>{
-    try{    
-        const response = axiosInstance.post("/procedures_list/" , data)
-
-        if (response.status === 200){
-            toast("Procedures Created successfuly")
-        }
+  export const createProcedure =  (data) =>{
 
 
-    }catch(error){
-        console.log("from the create procedure : " , error)
-        return null
-    }
+    axiosInstance.post("/procedures_list/" , data).then((response)=>{
+        toast("created ")
+        navigate(-1)
+    }).catch((error)=>{
+        toast(error.message)
+    })
+
+
+    
   }
 
   

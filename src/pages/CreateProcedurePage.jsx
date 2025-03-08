@@ -13,6 +13,14 @@ import {
 import { createProcedure } from '@/services/proceduresService'
 import { Button } from '@/components/ui/button'
 import { getDepartement } from '@/services/departementService'
+import { Input } from '@/components/ui/input'
+
+import "@blocknote/core/fonts/inter.css";
+import { BlockNoteView } from "@blocknote/mantine";
+import "@blocknote/mantine/style.css";
+import { useCreateBlockNote } from "@blocknote/react";
+
+
 
 function CreateProcedurePage() {
 
@@ -22,6 +30,9 @@ function CreateProcedurePage() {
     const [departements , setDepartements] = useState([])
 
     
+    const editor = useCreateBlockNote({});
+
+    const [content , setContent] = useState("")
 
 
     const fetchDepartements = async () =>{
@@ -29,8 +40,16 @@ function CreateProcedurePage() {
         setDepartements(departements_list)
     }
 
+    const onChange = async () => {
+      const html = await editor.blocksToHTMLLossy(editor.document)
+      
+      setProcedureData((prev)=>({...prev , content : html}))
+
+    }
+
     useEffect(()=>{
-        fetchDepartements()
+        //fetchDepartements();
+        onChange()
      } , [])
 
 
@@ -42,21 +61,24 @@ function CreateProcedurePage() {
      }
 
   return (
-    <div>
-    <form onSubmit={handleSubmit} className='flex flex-col gap-2' >
+    <div className=' '>
+    <form onSubmit={handleSubmit} className='flex flex-col gap-2  h-[60vh]' >
+    
+    
+    <div className='flex gap-3 w-full h-full '>
 
-        
-      <input placeholder='Title' onChange={(e)=>{
+
+
+    <div className='flex w-[20vw] flex-col gap-5 h-[100%]'>
+    <Input placeholder='Title' onChange={(e)=>{
         setProcedureData((prev)=>({...prev , title : e.target.value}))
       }}/>
 
-<input placeholder='description' onChange={(e)=>{
+<Input placeholder='description' onChange={(e)=>{
         setProcedureData((prev)=>({...prev , description : e.target.value}))
       }}/>
 
-<input placeholder='content' onChange={(e)=>{
-        setProcedureData((prev)=>({...prev , content : e.target.value}))
-      }}/>
+
 
 
       
@@ -73,16 +95,38 @@ function CreateProcedurePage() {
             <SelectItem  value="2">RH</SelectItem>
             </SelectContent>
         </Select>
-<input placeholder='status' onChange={(e)=>{
+<Input placeholder='status' onChange={(e)=>{
         setProcedureData((prev)=>({...prev , status : e.target.value}))
       }}/>
 
-<input placeholder='version' onChange={(e)=>{
+<Input placeholder='version' onChange={(e)=>{
         setProcedureData((prev)=>({...prev , version : e.target.value}))
       }}/>
-    <Button type="submit">Create</Button>
     
-    </form>      
+    </div>
+
+    <div className='flex-1'>
+    <BlockNoteView editor={editor} onChange={onChange} />
+    </div>
+    
+    </div>
+
+  
+    
+      
+    <Button type="submit">Create</Button>
+
+
+
+
+
+    </form>    
+
+
+
+
+
+
     </div>
   )
 }

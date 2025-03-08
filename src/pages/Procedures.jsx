@@ -23,7 +23,7 @@ function Procedures() {
 
   return (
     <div>
-        <Link to="/procedures/new">Create</Link>
+        <Link to="/procedures/new" className='bg-black text-white px-2 py-1 rounded-md text-center'>Create</Link>
       <Table>
         <TableHeader> 
           <TableRow>
