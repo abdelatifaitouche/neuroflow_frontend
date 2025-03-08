@@ -16,20 +16,12 @@ import { getDepartement } from '@/services/departementService'
 
 function CreateProcedurePage() {
 
-    const [ProcedureData , setProcedureData] = useState({title : '' , description : '' , content : '' , department : 0 , owner : 1 , status : '' , version : 0})
+    const [ProcedureData , setProcedureData] = useState({title : '' , description : '' , content : '' , department : 0  , status : '' , version : 0})
 
 
     const [departements , setDepartements] = useState([])
 
-    const procedure = {
-        title : "created from the frontend 2 " , 
-        description : 'testing' , 
-        content : 'testing'  , 
-        department : 1 , 
-        owner : 1 , 
-        status : "Draft" , 
-        version : 1
-    }
+    
 
 
     const fetchDepartements = async () =>{
@@ -44,6 +36,8 @@ function CreateProcedurePage() {
 
      const handleSubmit = (e)=>{
         e.preventDefault();
+        console.log(ProcedureData)
+        createProcedure(ProcedureData);
 
      }
 
@@ -64,29 +58,28 @@ function CreateProcedurePage() {
         setProcedureData((prev)=>({...prev , content : e.target.value}))
       }}/>
 
-      
+
       
       <Select onValueChange={(value)=>{
         console.log(value)
-        setDepartements(value)
+        setProcedureData((prev)=>({...prev , department : value}))
       }}>
             <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Departements" />
             </SelectTrigger>
             <SelectContent>
                 
-                {
-                    departements.map((departement)=>{
-                        return <SelectItem key={departement.id} value={departement.id}>{departement.departement_name}</SelectItem>
-                    })
-                }
+            <SelectItem value="1">DG</SelectItem>
+            <SelectItem  value="2">RH</SelectItem>
             </SelectContent>
         </Select>
-      <input placeholder='status'/>
+<input placeholder='status' onChange={(e)=>{
+        setProcedureData((prev)=>({...prev , status : e.target.value}))
+      }}/>
 
-
-      <input placeholder='version'/>
-
+<input placeholder='version' onChange={(e)=>{
+        setProcedureData((prev)=>({...prev , version : e.target.value}))
+      }}/>
     <Button type="submit">Create</Button>
     
     </form>      
