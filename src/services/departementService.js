@@ -1,22 +1,12 @@
-import axios from "axios";
 
+import AXIOS_CONFIG from '../utils/axiosConfig'
 
-
-
-
-const axiosInstance = axios.create({
-    baseURL : 'http://127.0.0.1:8000/api/departements/' ,
-    withCredentials : true , 
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
 
 
 
 export const getDepartement = async () =>{
     try{
-        const response = await axiosInstance.get("/departements_list")
+        const response = await AXIOS_CONFIG.get("/departements_list")
 
         return response.data.departements
 

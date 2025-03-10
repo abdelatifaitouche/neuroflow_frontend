@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import { Calendar, Home, Inbox, Search, Settings, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import AuthContext from "@/context/AuthContext";
 import { useContext } from "react";
@@ -14,7 +14,16 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+} from "@/components/ui/sidebar";
+
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { Separator } from "@/components/ui/separator";
 
 // Menu items.
 const items = [
@@ -31,21 +40,25 @@ const items = [
   {
     title: "Procedures",
     url: "/procedures",
-    icon: Settings,
+    icon: Inbox,
   },
-]
+  {
+    title: "Users",
+    url: "/users",
+    icon: Users,
+  },
+];
 
 export function AppSidebar() {
-
-  let {logout} = useContext(AuthContext)
-
+  let { logout } = useContext(AuthContext);
 
   return (
     <Sidebar>
       <SidebarContent>
         <SidebarHeader>
-          <ProfileHeader/>
+          <ProfileHeader />
         </SidebarHeader>
+
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -62,16 +75,44 @@ export function AppSidebar() {
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
-        </SidebarGroup>   
-           
-      </SidebarContent>
-      <SidebarFooter>
-      <SidebarMenuButton onClick={logout}>
-                      <Settings />
-                      <span>Logout</span>
-                    
+        </SidebarGroup>
+
+        <Separator />
+
+        {/* Collapsible Section */}
+        <SidebarGroup>
+          <SidebarMenu>
+            <Collapsible>
+              <SidebarMenuItem>
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton>
+                    <Settings />
+                    <span>More Settings</span>
                   </SidebarMenuButton>
-        </SidebarFooter>  
+                </CollapsibleTrigger>
+              </SidebarMenuItem>
+
+              <CollapsibleContent>
+                <SidebarMenuSub>
+                  <SidebarMenuSubItem asChild>
+                    <Link to="/advanced-settings">Advanced Settings</Link>
+                  </SidebarMenuSubItem>
+                  <SidebarMenuSubItem asChild>
+                    <Link to="/permissions">Permissions</Link>
+                  </SidebarMenuSubItem>
+                </SidebarMenuSub>
+              </CollapsibleContent>
+            </Collapsible>
+          </SidebarMenu>
+        </SidebarGroup>
+      </SidebarContent>
+
+      <SidebarFooter>
+        <SidebarMenuButton onClick={logout}>
+          <Settings />
+          <span>Logout</span>
+        </SidebarMenuButton>
+      </SidebarFooter>
     </Sidebar>
-  )
+  );
 }

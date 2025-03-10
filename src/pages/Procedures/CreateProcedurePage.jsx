@@ -61,7 +61,18 @@ function CreateProcedurePage() {
      }
 
   return (
-    <div className=' '>
+    <div>
+      <div className='flex justify-between'>
+        <div>
+
+        </div>
+        <div className='flex gap-2'>
+        <Button className={"bg-gray-300"}>Save</Button>
+        <Button type="submit">Create</Button>
+        </div>
+      
+
+      </div>
     <form onSubmit={handleSubmit} className='flex flex-col gap-2  h-[60vh]' >
     
     
@@ -114,7 +125,6 @@ function CreateProcedurePage() {
   
     
       
-    <Button type="submit">Create</Button>
 
 
 

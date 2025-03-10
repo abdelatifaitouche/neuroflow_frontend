@@ -2,6 +2,8 @@ import { createContext , useEffect, useState } from "react";
 import axios from "axios"
 import {useNavigate } from "react-router-dom"
 import { toast } from "sonner"
+import AXIOS_CONFIG from '../utils/axiosConfig'
+
 
 //we have private routes that a non auth user cannot access
 
@@ -18,8 +20,6 @@ export  const AuthProvider = ({children}) =>{
     const [isAuthenticated , setIsAuthenticated] = useState(null)
     const navigate = useNavigate()
 
-    const [authTokens , setAuthTokens] = useState({})
-
     // maybe i should add the login here
     const aixosInstance = axios.create({
         baseURL : 'http://127.0.0.1:8000' ,
@@ -31,7 +31,7 @@ export  const AuthProvider = ({children}) =>{
 
     let login = async (e)=> {
             e.preventDefault();
-            await axios.post("http://127.0.0.1:8000/api/token/" , {
+            await AXIOS_CONFIG.post("token/" , {
               email : e.target.email.value , 
               password : e.target.password.value
             },
@@ -54,7 +54,7 @@ export  const AuthProvider = ({children}) =>{
     
     let verifyToken = async () => {
         try {
-            const response = await aixosInstance.post("api/auth/verify/");
+            const response = await AXIOS_CONFIG.post("auth/verify/");
             if (response.status === 200) {
                 setIsAuthenticated(true);
             } else {
@@ -82,12 +82,8 @@ export  const AuthProvider = ({children}) =>{
     let logout = async () => {
         //send a request to api/auth/logout
 
-        await aixosInstance.post("api/auth/logout/" , null).then((response)=>{
+        await AXIOS_CONFIG.post("auth/logout/" , null).then((response)=>{
             if (response.status === 200){
-                /*
-                document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                document.cookie = "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";*/
-
                 setIsAuthenticated(false)
                 setTimeout(() => {
                     window.location.href = "/login"; // Hard refresh ensures cookies are cleared

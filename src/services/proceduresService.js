@@ -1,24 +1,10 @@
-import axios from "axios";
 import { toast } from "sonner";
-
-
-
-const API_URL = 'http://127.0.0.1:8000/api/procedures/procedures_list/';
-
-
-const axiosInstance = axios.create({
-    baseURL : 'http://127.0.0.1:8000/api/procedures/' ,
-    withCredentials : true , 
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-
+import AXIOS_CONFIG from '../utils/axiosConfig'
 
   
   export const getProcedures = async () => {
     try {
-      const response = await axiosInstance.get("/procedures_list");
+      const response = await AXIOS_CONFIG.get("procedures/procedures_list");
       return response.data.response; // Return the data correctly
     } catch (error) {
       console.error(error.response ? error.response.data : error.message);
@@ -32,7 +18,7 @@ const axiosInstance = axios.create({
   export const createProcedure =  (data) =>{
 
 
-    axiosInstance.post("/procedures_list/" , data).then((response)=>{
+    AXIOS_CONFIG.post("procedures/procedures_list/" , data).then((response)=>{
         toast("created ")
     }).catch((error)=>{
         toast(error.message)
@@ -42,4 +28,37 @@ const axiosInstance = axios.create({
     
   }
 
+  export const getProcedureDetails = async (procedure_id) =>{
+    try{
+      const response = await AXIOS_CONFIG.get(`procedures/procedure_details/${procedure_id}`)
+      return response.data.response
+    }catch(error){
+      console.log(error)
+        }
+  }
+
+
+
+  export const getProcedureSteps = async (procedure_id) =>{
+    try{
+      const response = await AXIOS_CONFIG.get(`procedures/procedure/${procedure_id}/steps`);
+      return response.data.response
+      console.log(response)
+    }catch(error){
+      console.log(error)
+    }
+  }
   
+
+
+  export const createProcedureStep = async (procedure_id , procedureStepData) => {
+    AXIOS_CONFIG.post(`procedures/procedure/${procedure_id}/steps` , procedureStepData)
+    .then((response)=>{
+      if(response.status === 200){
+        toast("Procedure step added")
+      }
+    })
+    .catch((error)=>{
+      toast("an error has occured")
+    })
+  }

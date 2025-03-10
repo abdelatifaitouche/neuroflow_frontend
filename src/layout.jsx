@@ -17,6 +17,7 @@ import {
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Toaster } from "sonner";
+import { Button } from "./components/ui/button";
 
 
 export default function Layout() {
@@ -34,7 +35,7 @@ export default function Layout() {
     <SidebarProvider>
       <div className="flex h-screen">
         {/* Sidebar */}
-        <div className="bg-green-50 border-r hidden md:block fixed h-full">
+        <div className="border-r hidden md:block fixed h-full">
           <AppSidebar />
         </div>
 
@@ -58,8 +59,9 @@ export default function Layout() {
                       );
                     })}
                 </BreadcrumbList>
+                
           </Breadcrumb>
-          <Outlet className="overflow-x-hidden" />
+          <Outlet className="overflow-x-hidden bg-blue-950" />
         </div>
       </div>
 
