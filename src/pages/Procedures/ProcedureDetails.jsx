@@ -1,35 +1,41 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { getProcedureDetails, getProcedureSteps } from '@/services/proceduresService';
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  getProcedureDetails,
+  getProcedureSteps,
+} from "@/services/proceduresService";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import "@blocknote/core/fonts/inter.css";
 import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
 import { useCreateBlockNote } from "@blocknote/react";
-import ProcedureStep from './procedureStep';
+import ProcedureStep from "./procedureStep";
 
+import { useLocation, useNavigate } from "react-router-dom";
+import ProcedureStepCard from "./ProceduresComponents/ProcedureStepCard";
 
-
-import { useLocation , useNavigate } from 'react-router-dom';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import ProcedureStepForm from "./ProceduresComponents/ProcedureStepForm";
+
 function ProcedureDetails() {
   const { id } = useParams();
   const editor = useCreateBlockNote({});
 
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [procedure, setProcedure] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [procedureSteps , setProcedureSteps] = useState(null)
+  const [procedureSteps, setProcedureSteps] = useState(null);
 
   useEffect(() => {
     const fetchProcedureDetails = async () => {
@@ -44,19 +50,19 @@ function ProcedureDetails() {
     };
 
     const fetchProceduresSteps = async () => {
-      try{
+      try {
         const response = await getProcedureSteps(id);
         setProcedureSteps(response);
-        console.log(response)
-
-      }catch(error){
-        console.log(error)
+        console.log(response);
+      } catch (error) {
+        console.log(error);
       }
-    }
+    };
 
     fetchProcedureDetails();
-    fetchProceduresSteps()
+    fetchProceduresSteps();
   }, [id]); // Run when id changes
+
   /*
   useEffect(() => {
     if (!procedure) return; // Wait for procedure data
@@ -75,11 +81,26 @@ function ProcedureDetails() {
 
   return (
     <div>
-      <Button onClick={()=>{
-        navigate('/procedures/')
-      }}>View Document</Button>
+      <div className="flex gap-2">
+        <Button>View Document</Button>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline">Add a step</Button>
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Create a step</SheetTitle>
+              <SheetDescription>
+                Each procedure contains different steps, Add one
+              </SheetDescription>
+            </SheetHeader>
+            <ProcedureStepForm procedure={procedure}/>
+          </SheetContent>
+        </Sheet>
+      </div>
 
-<br/><br/>
+      <br />
+      <br />
 
       <form className="flex gap-2">
         <div className="flex-1 flex flex-col gap-2">
@@ -88,38 +109,24 @@ function ProcedureDetails() {
           <Input value={procedure?.status || ""} readOnly />
           <Input value={procedure?.owner || ""} readOnly />
           <Input value={procedure?.department || ""} readOnly />
-          
         </div>
-        
       </form>
-    
-      <div className='mt-5 grid grid-cols-5 grid-rows-5 gap-2'>
-       {
-        procedureSteps && procedureSteps.map((step)=>{
-          return <Card>
-                  <CardHeader>
-                    <CardTitle>{step.title}</CardTitle>
-                      <CardDescription>step : {step.step_number}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p>{step.status}</p>
-                  </CardContent>
-                  <CardFooter className={"flex gap-2"}>
-                    <div className={`${step.is_validated ? 'bg-green-700' : 'bg-amber-500'} p-2 rounded-md text-white`}>
-                        {
-                          step.is_validated ? <p>Validated</p> : <p>Not validated</p>
-                        }
-                    </div>
-                    <Button>View step</Button>
-                  </CardFooter>
-                  </Card> 
-        })
-       }
+
+      <div className="mt-5 grid grid-cols-5 grid-rows-5 gap-2">
+        {procedureSteps &&
+          procedureSteps.map((step) => {
+            return (
+              <div
+                onClick={() => {
+                  navigate(`/procedures/${procedure.id}/steps/${step.id}`);
+                }}
+              >
+                <ProcedureStepCard step={step} />
+              </div>
+            );
+          })}
       </div>
-
-           
-
- </div>
+    </div>
   );
 }
 

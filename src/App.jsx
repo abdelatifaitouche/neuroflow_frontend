@@ -11,26 +11,76 @@ import { Toaster } from "sonner";
 import CreateProcedurePage from "./pages/Procedures/CreateProcedurePage";
 import ProcedureDetails from "./pages/Procedures/ProcedureDetails";
 import UsersPage from "./pages/Users/UsersPage";
+import ProcedureStepDetails from "./pages/Procedures/ProcedureStepDetails";
 function App() {
-    return (
-        <AuthProvider>
-            <Routes>
-                <Route path="/login" element={<LoginPage />} />
-                <Route element={<Layout />}>
-                    <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
-                    <Route path="/procedures" element={<PrivateRoute><Procedures /></PrivateRoute>} />
-                    <Route path="/procedures/new" element={<PrivateRoute><CreateProcedurePage /></PrivateRoute>} />
-                    <Route path="/procedures/:id" element={<PrivateRoute><ProcedureDetails /></PrivateRoute>} />
+  return (
+    <AuthProvider>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route element={<Layout />}>
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/procedures"
+            element={
+              <PrivateRoute>
+                <Procedures />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/procedures/new"
+            element={
+              <PrivateRoute>
+                <CreateProcedurePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/procedures/:id"
+            element={
+              <PrivateRoute>
+                <ProcedureDetails />
+              </PrivateRoute>
+            }
+          />
 
-                    <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
-                    <Route path="/users" element={<PrivateRoute><UsersPage /></PrivateRoute>} />
+          <Route
+            path="/procedures/:id/steps/:stepID"
+            element={
+              <PrivateRoute>
+                <ProcedureStepDetails />
+              </PrivateRoute>
+            }
+          />
 
-                </Route>
-            </Routes>
-            <Toaster />
-
-        </AuthProvider>
-    );
+          <Route
+            path="/settings"
+            element={
+              <PrivateRoute>
+                <Settings />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <PrivateRoute>
+                <UsersPage />
+              </PrivateRoute>
+            }
+          />
+        </Route>
+      </Routes>
+      <Toaster />
+    </AuthProvider>
+  );
 }
 
 export default App;

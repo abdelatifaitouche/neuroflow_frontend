@@ -62,3 +62,14 @@ import AXIOS_CONFIG from '../utils/axiosConfig'
       toast("an error has occured")
     })
   }
+
+
+
+  export const getStepById = async (step_id) => {
+    try{
+      const response = await AXIOS_CONFIG.get(`procedures/procedure/steps/${step_id}`) ; 
+      return response.data.response
+    }catch(error){
+      console.log(error)
+    }
+  }
