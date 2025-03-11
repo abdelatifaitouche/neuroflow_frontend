@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
+  deleteProcedure,
   getProcedureDetails,
   getProcedureSteps,
 } from "@/services/proceduresService";
@@ -25,6 +26,18 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import ProcedureStepForm from "./ProceduresComponents/ProcedureStepForm";
 
 function ProcedureDetails() {
@@ -83,6 +96,29 @@ function ProcedureDetails() {
     <div>
       <div className="flex gap-2">
         <Button>View Document</Button>
+        <AlertDialog>
+          <AlertDialogTrigger className={'bg-red-500 py-1 px-2 text-white rounded-md'}>Delete</AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={async () => {
+                  const response = await deleteProcedure(id);
+                }}
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="outline">Add a step</Button>
@@ -94,7 +130,7 @@ function ProcedureDetails() {
                 Each procedure contains different steps, Add one
               </SheetDescription>
             </SheetHeader>
-            <ProcedureStepForm procedure={procedure}/>
+            <ProcedureStepForm procedure={procedure} setProcedureSteps={setProcedureSteps} />
           </SheetContent>
         </Sheet>
       </div>

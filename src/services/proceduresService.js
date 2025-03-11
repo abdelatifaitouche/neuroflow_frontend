@@ -39,6 +39,17 @@ import AXIOS_CONFIG from '../utils/axiosConfig'
 
 
 
+  export const deleteProcedure = async (procedure_id) => {
+    try {
+      const response = await AXIOS_CONFIG.delete(`procedures/procedure_details/${procedure_id}`);
+      return response.status === 204; // Return `true` if successfully deleted
+    } catch (error) {
+      console.error("Delete failed:", error);
+      return false;
+    }
+  };
+
+
   export const getProcedureSteps = async (procedure_id) =>{
     try{
       const response = await AXIOS_CONFIG.get(`procedures/procedure/${procedure_id}/steps`);
@@ -51,18 +62,23 @@ import AXIOS_CONFIG from '../utils/axiosConfig'
   
 
 
-  export const createProcedureStep = async (procedure_id , procedureStepData) => {
-    AXIOS_CONFIG.post(`procedures/procedure/${procedure_id}/steps` , procedureStepData)
-    .then((response)=>{
-      if(response.status === 200){
-        toast("Procedure step added")
+  export const createProcedureStep = async (procedure_id, procedureStepData) => {
+    try {
+      const response = await AXIOS_CONFIG.post(
+        `procedures/procedure/${procedure_id}/steps`, 
+        procedureStepData
+      );
+  
+      if (response.status === 201) {  // Use 201 for "Created" instead of 200
+        toast.success("Procedure step added");
+        return response.data;  // Return data to use it in the calling function
       }
-    })
-    .catch((error)=>{
-      toast("an error has occured")
-    })
-  }
-
+    } catch (error) {
+      console.error("API Error:", error.response?.data || error.message);
+      toast.error("An error has occurred. Check console for details.");
+      throw error;  // Rethrow for better error handling in the caller
+    }
+  };
 
 
   export const getStepById = async (step_id) => {

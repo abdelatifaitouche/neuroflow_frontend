@@ -11,10 +11,8 @@ import { Button } from "@/components/ui/button";
 
 import React from "react";
 
-function ProcedureStepCard({step}) {
-
-    const {title , step_number , status , is_validated} = step ; 
-
+function ProcedureStepCard({ step }) {
+  const { title, step_number, status, is_validated } = step;
 
   return (
     <Card>

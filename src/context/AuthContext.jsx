@@ -3,6 +3,7 @@ import axios from "axios"
 import {useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import AXIOS_CONFIG from '../utils/axiosConfig'
+import getUsers from "@/services/usersServices";
 
 
 //we have private routes that a non auth user cannot access
@@ -18,6 +19,7 @@ export default AuthContext;
 export  const AuthProvider = ({children}) =>{
 
     const [isAuthenticated , setIsAuthenticated] = useState(null)
+    const [users , setUsers] = useState([])
     const navigate = useNavigate()
 
     // maybe i should add the login here
@@ -74,6 +76,22 @@ export  const AuthProvider = ({children}) =>{
     }, []);
     
 
+    const fetchUsers = async ()=>{
+        try {
+            const response = await getUsers()
+            setUsers(response.users)
+        }catch(error){
+
+        }
+    }
+
+
+    useEffect(()=>{
+        fetchUsers()
+    } , [])
+
+
+
     
 
     //and logout here
@@ -81,7 +99,6 @@ export  const AuthProvider = ({children}) =>{
 
     let logout = async () => {
         //send a request to api/auth/logout
-
         await AXIOS_CONFIG.post("auth/logout/" , null).then((response)=>{
             if (response.status === 200){
                 setIsAuthenticated(false)
@@ -99,7 +116,8 @@ export  const AuthProvider = ({children}) =>{
         logout : logout,
         login : login , 
         verifyToken : verifyToken,
-        isAuthenticated : isAuthenticated
+        isAuthenticated : isAuthenticated,
+        users : users
     }
 
     return (
