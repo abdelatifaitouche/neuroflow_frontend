@@ -33,14 +33,14 @@ export default function Layout() {
 
   return (
     <SidebarProvider>
-      <div className="flex h-screen">
+      <div className="flex ">
         {/* Sidebar */}
         <div className="border-r hidden md:block fixed h-full">
           <AppSidebar />
         </div>
 
         {/* Main Content (With Sidebar Space Adjusted) */}
-        <div className="flex-2 w-[80vw] p-6 md:ml-64 ml-0 ">
+        <div className="flex-2 w-[82vw] h-[100%] p-6 md:ml-64 ml-0 bg-gray-100 ">
           {/*<SidebarTrigger />*/}
           <Breadcrumb className="mb-3">
             <BreadcrumbList>
@@ -61,7 +61,7 @@ export default function Layout() {
                 </BreadcrumbList>
                 
           </Breadcrumb>
-          <Outlet className="overflow-x-hidden bg-blue-950" />
+          <Outlet className="overflow-x-hidden bg-gray-50" />
         </div>
       </div>
 

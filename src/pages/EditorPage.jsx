@@ -49,7 +49,7 @@ function EditorPage() {
 
   return (
     <div className="m-4 p-4">
-      <Button className={"bg-green-300 rounded-md py-1 px-2"}
+      <Button className={"bg-green-300 rounded-md  mb-2 py-1 px-2"}
         onClick={async () => {
           await patchProcedureDetatils(procedure, procedure.id);
         }}
