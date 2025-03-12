@@ -37,6 +37,27 @@ import AXIOS_CONFIG from '../utils/axiosConfig'
         }
   }
 
+  export const patchProcedureDetatils = async (data, procedure_id) => {
+    try {
+      await AXIOS_CONFIG.patch(
+        `procedures/procedure_details/${procedure_id}`, // Ensure trailing slash
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      toast("Updated");
+    } catch (error) {
+      toast(error.response?.data || error.message);
+      console.error("PATCH Error:", error.response?.data);
+    }
+  };
+  
+
+
+
 
 
   export const deleteProcedure = async (procedure_id) => {

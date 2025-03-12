@@ -12,6 +12,7 @@ import CreateProcedurePage from "./pages/Procedures/CreateProcedurePage";
 import ProcedureDetails from "./pages/Procedures/ProcedureDetails";
 import UsersPage from "./pages/Users/UsersPage";
 import ProcedureStepDetails from "./pages/Procedures/ProcedureStepDetails";
+import EditorPage from "./pages/EditorPage";
 function App() {
   return (
     <AuthProvider>
@@ -56,6 +57,15 @@ function App() {
             element={
               <PrivateRoute>
                 <ProcedureStepDetails />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/procedures/:id/editor"
+            element={
+              <PrivateRoute>
+                <EditorPage />
               </PrivateRoute>
             }
           />

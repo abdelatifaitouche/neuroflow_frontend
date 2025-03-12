@@ -6,7 +6,7 @@ import {
   getProcedureSteps,
 } from "@/services/proceduresService";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "@blocknote/core/fonts/inter.css";
 import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
@@ -97,7 +97,7 @@ function ProcedureDetails() {
     <div>
       <h1 className="font-bold text-3xl">{procedure?.title || ""}</h1>
       <div className="flex justify-between mt-2">
-      <Button>View Document</Button>
+      <Link to={`/procedures/${procedure?.id}/editor`}>Write the Doc</Link>
       <div className="flex gap-2">
       <AlertDialog>
           <AlertDialogTrigger className={'bg-red-500 py-1 px-2 text-white rounded-md'}>Delete</AlertDialogTrigger>
