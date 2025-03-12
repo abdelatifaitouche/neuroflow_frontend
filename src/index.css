@@ -9,6 +9,11 @@ body{
 }
 
 
+@font-face {
+  font-family: "Saira-bold";
+  src: url("../public/assets/fonts/SairaCondensed-Bold.ttf");
+}
+
 
 :root {
   --background: oklch(1 0 0);
