@@ -39,6 +39,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import ProcedureStepForm from "./ProceduresComponents/ProcedureStepForm";
+import { Label } from "@/components/ui/label";
 
 function ProcedureDetails() {
   const { id } = useParams();
@@ -76,7 +77,7 @@ function ProcedureDetails() {
     fetchProceduresSteps();
   }, [id]); // Run when id changes
 
-  /*
+  
   useEffect(() => {
     if (!procedure) return; // Wait for procedure data
 
@@ -90,13 +91,15 @@ function ProcedureDetails() {
     };
 
     loadInitialHTML();
-  }, [procedure, editor]); // Run when procedure updates*/
+  }, [procedure, editor]); // Run when procedure updates
 
   return (
     <div>
+      <h1 className="font-bold text-3xl">{procedure?.title || ""}</h1>
+      <div className="flex justify-between mt-2">
+      <Button>View Document</Button>
       <div className="flex gap-2">
-        <Button>View Document</Button>
-        <AlertDialog>
+      <AlertDialog>
           <AlertDialogTrigger className={'bg-red-500 py-1 px-2 text-white rounded-md'}>Delete</AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
@@ -134,19 +137,34 @@ function ProcedureDetails() {
           </SheetContent>
         </Sheet>
       </div>
-
-      <br />
-      <br />
-
-      <form className="flex gap-2">
-        <div className="flex-1 flex flex-col gap-2">
-          <Input value={procedure?.title || ""} readOnly />
-          <Input value={procedure?.description || ""} readOnly />
-          <Input value={procedure?.status || ""} readOnly />
-          <Input value={procedure?.owner || ""} readOnly />
-          <Input value={procedure?.department || ""} readOnly />
+      </div>
+      
+        
+      <div className="grid grid-cols-1 gap-2 mt-4">
+        <div className="flex gap-2">
+          <Label htmlFor="procedure">Status</Label>
+          <div className={`${procedure?.status === "Draft" ? "bg-amber-400" : "bg-green-800"} rounded-md text-white w-16 py-1  text-center text-sm`}>
+                    {procedure?.status}
+          </div>
         </div>
-      </form>
+
+        <div className="flex gap-2">
+          <Label htmlFor="procedure">Owner</Label>
+          <p>{procedure?.owner}</p>
+        </div>
+
+        <div className="flex gap-2">
+          <Label htmlFor="procedure">Departement</Label>
+          <p>{procedure?.department}</p>
+        </div>
+        
+      </div>
+      <div className="flex flex-col border-t-2 py-2 border-b-2 gap-2 mt-4">
+          <Label className={"text-gray-400"} htmlFor="procedure">Description</Label>
+          <p className="text-black border-l-4 px-2">{procedure?.description}</p>
+      </div>
+
+      <h1 className="font-bold text-3xl mt-2">Steps to execute : </h1>
 
       <div className="mt-5 grid grid-cols-5 grid-rows-5 gap-2">
         {procedureSteps &&
@@ -162,8 +180,50 @@ function ProcedureDetails() {
             );
           })}
       </div>
+
     </div>
   );
 }
 
 export default ProcedureDetails;
+
+/***
+ * <Button>View Document</Button>
+        <AlertDialog>
+          <AlertDialogTrigger className={'bg-red-500 py-1 px-2 text-white rounded-md'}>Delete</AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={async () => {
+                  const response = await deleteProcedure(id);
+                }}
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline">Add a step</Button>
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Create a step</SheetTitle>
+              <SheetDescription>
+                Each procedure contains different steps, Add one
+              </SheetDescription>
+            </SheetHeader>
+            <ProcedureStepForm procedure={procedure} setProcedureSteps={setProcedureSteps} />
+          </SheetContent>
+        </Sheet>
+ */

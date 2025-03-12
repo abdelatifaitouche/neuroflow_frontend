@@ -69,7 +69,7 @@ function Procedures() {
                   <TableCell>{procedure.title}</TableCell>
                   <TableCell>{procedure.version}</TableCell>
                   <TableCell>
-                    <div className={`${procedure.status === "Draft" ? "bg-amber-600" : "bg-green-800"} rounded-md text-white w-16 py-1  text-center text-sm`}>
+                    <div className={`${procedure.status === "Draft" ? "bg-amber-400" : "bg-green-800"} rounded-md text-white w-16 py-1  text-center text-sm`}>
                     {procedure.status}
                     </div>
                   </TableCell>
