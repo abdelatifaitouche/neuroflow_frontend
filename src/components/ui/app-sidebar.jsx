@@ -47,6 +47,11 @@ const items = [
     url: "/users",
     icon: Users,
   },
+  {
+    title: "Process",
+    url: "/process",
+    icon: Users,
+  },
 ];
 
 export function AppSidebar() {

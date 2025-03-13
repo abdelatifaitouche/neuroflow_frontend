@@ -55,7 +55,8 @@ function ProcedureDetails() {
     const fetchProcedureDetails = async () => {
       setIsLoading(true);
       try {
-        const response = await getProcedureDetails(id); // Use id from params
+        const response = await getProcedureDetails(id);
+        console.log(response) // Use id from params
         setProcedure(response);
       } catch (error) {
         console.error("Error fetching procedure:", error);
@@ -150,7 +151,7 @@ function ProcedureDetails() {
 
         <div className="flex gap-2">
           <Label htmlFor="procedure">Owner</Label>
-          <p>{procedure?.owner}</p>
+          <p>{procedure?.owner?.username}</p>
         </div>
 
         <div className="flex gap-2">

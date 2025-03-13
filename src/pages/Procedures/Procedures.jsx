@@ -57,6 +57,7 @@ function Procedures() {
             <TableRow>
               <TableHead>Procedure</TableHead>
               <TableHead>Version</TableHead>
+              <TableHead>Departement</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>owner</TableHead>
               <TableHead>view</TableHead>
@@ -64,6 +65,7 @@ function Procedures() {
           </TableHeader>
           <TableBody>
             {procedures.map((procedure) => {
+              console.log(procedure.owner?.username)
               return (
                 <TableRow key={procedure.id}>
                   <TableCell>{procedure.title}</TableCell>
@@ -73,7 +75,7 @@ function Procedures() {
                     {procedure.status}
                     </div>
                   </TableCell>
-                  <TableCell>{procedure.owner}</TableCell>
+                  <TableCell>{procedure.owner?.username}</TableCell>
                   <TableCell>
                     <Button
                       onClick={() => {

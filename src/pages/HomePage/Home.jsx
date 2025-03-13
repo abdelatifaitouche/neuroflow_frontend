@@ -67,8 +67,14 @@ function Home() {
 
         <div className="col-start-1 row-start-2 bg-white rounded-md min-h-[200px] p-3">
           <div className="flex justify-between">
-            <h2>Recent Actvities</h2>
-            <h2>See all -</h2>
+            <h2 className="font-bold text-2xl">Recent Actvities</h2>
+            <h2 className="font-bold">See all -</h2>
+          </div>
+          <div className="flex flex-col">
+            <div>
+                <h1>Procedure title</h1>
+                <h1>Bnadem</h1>
+            </div>
           </div>
         </div>
 
