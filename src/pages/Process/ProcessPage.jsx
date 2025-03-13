@@ -9,10 +9,11 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Link, useNavigate } from "react-router-dom";
 
 function ProcessPage() {
   const [processes, setProcesses] = useState([]);
-
+  const navigate = useNavigate();
   const fetchProcess = async () => {
     try {
       const data = await getProcess();
@@ -45,13 +46,24 @@ function ProcessPage() {
                 <TableCell>{process.started_at}</TableCell>
                 <div
                   className={`${
-                    process.status === "Launched" ? "bg-amber-400" : "bg-green-800"
+                    process.status === "Launched"
+                      ? "bg-amber-400"
+                      : "bg-green-800"
                   } rounded-md text-white w-16 py-1 text-center text-sm`}
                 >
                   {process.status}
                 </div>
                 <TableCell>
-                  <Button>View</Button>
+                  <Button
+                    onClick={() => {
+                      //navigate to
+                      navigate(`/process/process_details/${process.id}`, {
+                        state: { process },
+                      });
+                    }}
+                  >
+                    View
+                  </Button>
                 </TableCell>
               </TableRow>
             );
@@ -63,4 +75,3 @@ function ProcessPage() {
 }
 
 export default ProcessPage;
-
