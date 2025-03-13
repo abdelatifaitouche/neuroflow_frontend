@@ -12,7 +12,7 @@ let BASE_API_URL = ""
 
 const config = {
     developement : {
-        API_URL : "http://127.0.0.1:8000/api/"
+        API_URL : "https://neuroflow-backend.onrender.com/api/"
     }
 }
 
