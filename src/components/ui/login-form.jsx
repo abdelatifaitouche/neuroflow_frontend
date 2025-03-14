@@ -5,10 +5,11 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import AuthContext from "@/context/AuthContext"
 import { useContext } from "react"
+import { ScaleLoader } from "react-spinners"
 export function LoginForm(){
 
 
-  let {login} = useContext(AuthContext)
+  let {login , isLoading} = useContext(AuthContext)
 
   return (
     <div className={cn("flex flex-col items-center overflow-y-hidden")}>
@@ -52,7 +53,10 @@ export function LoginForm(){
                 <Input name='password' id="password" type="password" required />
               </div>
               <Button type="submit" className="w-full bg-[#00FFCC] text-black">
-                Login
+                {
+                  isLoading?<ScaleLoader height={20} /> : 'Login'
+                }
+              
               </Button>       
             </div>
           </form>

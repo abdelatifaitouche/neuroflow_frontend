@@ -21,6 +21,7 @@ export  const AuthProvider = ({children}) =>{
     const [isAuthenticated , setIsAuthenticated] = useState(null)
     const [users , setUsers] = useState([])
     const navigate = useNavigate()
+    const [isloading , setIsLoading] = useState(false)
 
     // maybe i should add the login here
     const aixosInstance = axios.create({
@@ -33,13 +34,14 @@ export  const AuthProvider = ({children}) =>{
 
     let login = async (e)=> {
             e.preventDefault();
+            setIsLoading(true)
             await AXIOS_CONFIG.post("token/" , {
               email : e.target.email.value , 
               password : e.target.password.value
             },
             {withCredentials : true},
          ).then((response)=>{
-            
+                setIsLoading(false)
                 if(response.status === 200){
                     navigate('/')
                     setIsAuthenticated(true)
@@ -117,7 +119,8 @@ export  const AuthProvider = ({children}) =>{
         login : login , 
         verifyToken : verifyToken,
         isAuthenticated : isAuthenticated,
-        users : users
+        users : users,
+        isLoading : isloading
     }
 
     return (
